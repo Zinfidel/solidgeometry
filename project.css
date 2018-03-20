@@ -1,0 +1,126 @@
+html {
+    font-family: sans-serif;
+}
+
+p,h1,h2,h3 {
+    font-family: sans-serif;
+}
+
+canvas {
+    float: left;
+    border: 1px solid black;
+}
+
+#controls {
+    float:left;
+    width:512px;
+    /*height:512px;*/
+    border: 1px solid black;
+}
+
+#createPanel {
+    height: 64px;
+    background-color: slategray;
+    border-bottom: 2px solid black;
+}
+
+#booleanSelectPanel {
+    border-bottom: 2px solid black;
+}
+
+#createPanel h1 {
+    float: left;
+}
+
+button.createButton {
+    width: 128px;
+    height: 64px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: darkslategray;
+    background-position: center;
+    float: right;
+}
+
+button.booleanButton {
+    width: 64px;
+    height: 64px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    float:right;
+}
+
+#cubeButton {
+    background-image: url('images/cube.png');
+}
+
+#sphereButton {
+    background-image: url('images/sphere.png');
+}
+
+#cylinderButton {
+    background-image: url('images/cylinder.png');
+}
+
+#coneButton {
+    background-image: url('images/cone.png');
+}
+
+#unionButton {
+    background-image: url('images/union.png');
+}
+
+#intersectButton {
+    background-image: url('images/intersect.png');
+}
+
+#subtractButton {
+    background-image: url('images/difference.png');
+}
+
+#interactionPanel {
+    float: left;
+    width: 330px;
+    height: 446px;
+}
+
+#interactionPanel div {
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    padding-left: 5px;
+}
+
+#interactionPanel h2, #booleanSelectPanel h2{
+    margin: 0px;
+    font-size:1em;
+}
+
+#interactionPanel div {
+    padding-bottom: 5px;
+}
+
+#sceneList {
+    width: 182px;
+    /*height: 446px;*/
+    height: 400px;
+}
+
+#colorPanel input {
+    width: 3em;
+}
+
+#selectPanel button{
+    /*
+    width: 182px;
+    height: 46px;
+    */
+    float: right;
+}
+
+#notes {
+    clear:left;
+    border: 1pt black dashed;
+    padding: 0px 5px;
+    width: 1014px;
+}

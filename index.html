@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Final Project - Constructive Solid Geometry</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="project.css">
+
+        <!-- WebGL utility scripts -->
+        <script type="text/javascript" src="common/webgl-utils.js"></script>
+        <script type="text/javascript" src="common/initShaders2.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="MVe.js"></script> 
+
+        <!-- Project-specific scripts -->
+        <script type="text/javascript" src="primitive.js"></script>
+        <script type="text/javascript" src="geometry.js"></script>
+        <script type="text/javascript" src="bsp.js"></script>
+        <script type="text/javascript" src="project.js"></script>
+        <script type="text/javascript" src="trackball.js"></script>
+    </head>
+    <body>
+        <canvas id="gl-canvas" width="512" height="512">
+            Your browser does not support the HTML5 canvas element.
+        </canvas>
+        <div id="controls">
+            <div id="createPanel">
+                <button id="coneButton" class="createButton"></button>
+                <button id="cylinderButton" class="createButton"></button>
+                <button id="sphereButton" class="createButton"></button>
+                <button id="cubeButton" class="createButton"></button>
+            </div>
+            <div id="booleanSelectPanel">
+                <!-- Operation Buttons -->
+                <button id="subtractButton" class="booleanButton"
+                        title="Subtraction"></button>
+                <button id="intersectButton" class="booleanButton"
+                        title="Intersection"></button>
+                <button id="unionButton" class="booleanButton"
+                        title="Union"></button>
+
+                <h2>Boolean Operations</h2>
+
+                <!-- Geometry field 1 -->
+                <label for="geo1Field">Geometry 1:</label>
+                <input id="geo1Field" type="text" readonly>
+                <button id="geo1SetButton">Set</button>
+                <br>
+                
+                <!-- Geometry field 2 -->
+                <label for="geo2Field">Geometry 2:</label>
+                <input id="geo2Field" type="text" readonly>
+                <button id="geo2SetButton">Set</button>
+
+                <br style="clear:both;">
+
+            </div>
+            <div id="interactionPanel">
+                <div id="translationPanel">
+                    <h2>Translation</h2>
+                    <label for="transX">X:</label>
+                    <input id="transX" type="number" value="0"
+                           min="-4" max="5" step="0.01">
+                    <input id="transXSlider" type="range" value="0"
+                           min="-5" max="5" step="0.01">
+                    <br>
+                    <label for="transY">Y:</label>
+                    <input id="transY" type="number" value="0"
+                           min="-5" max="5" step="0.01">
+                    <input id="transYSlider" type="range" value="0"
+                           min="-5" max="5" step="0.01">
+                    <br>
+                    <label for="transZ">Z:</label>
+                    <input id="transZ" type="number" value="0"
+                           min="-5" max="5" step="0.1">
+                    <input id="transZSlider" type="range" value="0"
+                           min="-5" max="5" step="0.01">
+                </div>
+                <div id="scalePanel">
+                    <h2>Scaling</h2>
+                    <label for="scaleX">X:</label>
+                    <input id="scaleX" type="number" value="1"
+                           min="0.01" max="3" step="0.01">
+                    <input id="scaleXSlider" type="range" value="1"
+                           min="0.01" max="3" step="0.01">
+                    <br>
+                    <label for="scaleY">Y:</label>
+                    <input id="scaleY" type="number" value="1"
+                           min="0.01" max="3" step="0.01">
+                    <input id="scaleYSlider" type="range" value="1"
+                           min="0.01" max="3" step="0.01">
+                    <br>
+                    <label for="scaleZ">Z:</label>
+                    <input id="scaleZ" type="number" value="1"
+                           min="0.01" max="3" step="0.01">
+                    <input id="scaleZSlider" type="range" value="1"
+                           min="0.01" max="3" step="0.01">
+                </div>
+                <div id="rotationPanel">
+                    <h2>Rotation</h2>
+                    <label for="rotX">X:</label>
+                    <input id="rotX" type="number" value="0" 
+                           step="1" min="-180" max="180">
+                    <input id="rotXSlider" type="range" value="0"
+                           min="-180" max="180" step="1">
+                    <br>
+                    <label for="rotY">Y:</label>
+                    <input id="rotY" type="number" value="0"
+                           step="1" min="-180" max="180">
+                    <input id="rotYSlider" type="range" value="0"
+                           min="-180" max="180" step="1">
+                    <br>
+                    <label for="rotZ">Z:</label>
+                    <input id="rotZ" type="number" value="0"
+                           step="1" min="-180" max="180">
+                    <input id="rotZSlider" type="range" value="0"
+                           min="-180" max="180" step="1">
+                </div>
+                <div id="colorPanel">
+                    <h2>Color</h2>
+                    <label for="colR">R:</label>
+                    <input id="colR" type="number" value="1"
+                           step="0.1" min="0" max="1">
+                    <label for="colG">G:</label>
+                    <input id="colG" type="number" value="1"
+                           step="0.1" min="0" max="1">
+                    <label for="colB">B:</label>
+                    <input id="colB" type="number" value="1"
+                           step="0.1" min="0" max="1">
+                    <label for="colA">A:</label>
+                    <input id="colA" type="number" value="1"
+                           step="0.1" min="0" max="1">
+                    <button id="colorButton">Set Color</button>
+                </div>
+            </div>
+            <div id="selectPanel">
+                <select id="sceneList" size="10"></select>
+                <button id="deleteButton">Delete Selected Object</button>
+                <button id="copyButton">Copy Selected Object</button>
+            </div>
+        </div>
+        <div id="notes">
+            <p>Notes on using this program:<p>
+            <h3>Basics</h3>
+            <ul>
+                <li>The gray block on the left is the 3D view. You can rotate the
+                    view around by clicking and dragging.</li>
+                <li>The buttons with pictures of shapes will create their
+                    corresponding shape inside of the canvas at coordinates 0, 0, 0.</li>
+                <li>A shape gets a white wireframe mesh when it is selected. A shape can
+                    be selected by clicking the shape in the viewer button, or by clicking
+                    on the name of the shape in the list view on the right.
+                <li>Currently selected shapes can be manipulated via the fields and
+                    sliders to the right of the canvas. Updates are in real time, except
+                    for color, which must be set all at once. Currently selected shapes can
+                    be deleted by clicking the delete button below the object list.</li>
+            </ul>
+            <h3>Boolean Operations</h3>
+            <ul>
+                <li>There are three boolean operations avaialable: UNION, INTERSECTION,
+                    and SUBTRACTION. They are accessible by the three buttons in the
+                    <b>Boolean Operations</b> section. Hover over the buttons for the name
+                    of the specific operation.</li>
+                <li>To perform boolean operations, two pieces of geometry must be selected
+                    in the <b>Boolean Operations</b> section. To do this, select the first
+                    piece of geometry (order matters for subtraction!) either by picking it
+                    in the viewer, or by selecting it from the list, then clicking the
+                    first "Set" button in the <b>Boolean Operations</b> panel. The name of
+                    the geometry will appear in the text box. Repeat this process for the
+                    second piece of geometry.</li>
+                <li>When two pieces of geometry are selected, click on one of the boolean
+                    operation buttons. The original geometry will be deleted, and the new,
+                    combined geometry will take its place. The new geometry can be manipulated
+                    like any other geometry, and can have more boolean operations applied to
+                    it as well!</li>
+            </ul>
+        </div>
+        <h2>Examples</h2>
+        A 6-sided die:<br>
+        <img src="images/die.png" alt="6-Sided Die"/><br>
+        Some sort of cartridge, perhaps a magnum version of the 5.56x45mm:<br>
+        <img src="images/cartridge.png" alt="Cartridge"/><br>
+        My USB drive:<br>
+        <img src="images/usb.png" alt="USB 3.0 Drive"/><br>
+    </body>
+</html>
